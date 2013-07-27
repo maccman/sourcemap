@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'sprockets/vlq'
+require 'sourcemaps/vlq'
 
 class TestVLQ < Test::Unit::TestCase
   TESTS = {
@@ -22,19 +22,19 @@ class TestVLQ < Test::Unit::TestCase
 
   def test_encode
     TESTS.each do |str, int|
-      assert_equal str, Sprockets::VLQ.encode(int)
+      assert_equal str, SourceMaps::VLQ.encode(int)
     end
   end
 
   def test_decode
     TESTS.each do |str, int|
-      assert_equal int, Sprockets::VLQ.decode(str)
+      assert_equal int, SourceMaps::VLQ.decode(str)
     end
   end
 
   def test_encode_decode
     (-255..255).each do |int|
-      assert_equal [int], Sprockets::VLQ.decode(Sprockets::VLQ.encode([int]))
+      assert_equal [int], SourceMaps::VLQ.decode(SourceMaps::VLQ.encode([int]))
     end
   end
 end
