@@ -5,7 +5,7 @@ require 'sourcemaps/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "sourcemaps"
-  spec.version       = Sourcemaps::VERSION
+  spec.version       = SourceMaps::VERSION
   spec.authors       = ["Alex MacCaw"]
   spec.email         = ["maccman@gmail.com"]
   spec.description   = %q{TODO: Write a gem description}
