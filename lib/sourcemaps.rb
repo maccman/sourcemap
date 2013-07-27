@@ -1,5 +1,5 @@
 require "sourcemaps/version"
 
-module Sourcemaps
+module SourceMaps
   # Your code goes here...
 end
