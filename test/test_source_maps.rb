@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'sprockets/source_map'
+require 'sourcemaps/map'
 
 class TestSourceMap < Test::Unit::TestCase
   def test_mappings
@@ -11,7 +11,7 @@ class TestSourceMap < Test::Unit::TestCase
       'sources' => ["script.js"],
       'names' => ["hello", "console", "log"]
     }
-    map = Sprockets::SourceMap.from_hash(hash)
+    map = SourceMaps::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -47,7 +47,7 @@ class TestSourceMap < Test::Unit::TestCase
       'sources' => ["example.coffee"],
       'names' => ["number", "opposite", "square", "list", "math", "race", "cubes"]
     }
-    map = Sprockets::SourceMap.from_hash(hash)
+    map = SourceMaps::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 6, mapping.generated.line
@@ -81,7 +81,7 @@ class TestSourceMap < Test::Unit::TestCase
       'sources' => ["example.js"],
       'names' => ["list","math","num","square","x","Math","sqrt","cube","elvis","alert","_i","_len","_results","length","push","call"]
     }
-    map = Sprockets::SourceMap.from_hash(hash)
+    map = SourceMaps::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -109,9 +109,9 @@ end
 
 
 class TestMappings < Test::Unit::TestCase
-  Offset   = Sprockets::SourceMap::Offset
-  Mapping  = Sprockets::SourceMap::Mapping
-  Mappings = Sprockets::SourceMap::Mappings
+  Offset   = SourceMaps::Offset
+  Mapping  = SourceMaps::Mapping
+  Mappings = SourceMaps::Mappings
 
   def setup
     @mappings = Mappings.new([
@@ -158,8 +158,8 @@ class TestMappings < Test::Unit::TestCase
 end
 
 class TestMapping < Test::Unit::TestCase
-  Offset  = Sprockets::SourceMap::Offset
-  Mapping = Sprockets::SourceMap::Mapping
+  Offset  = SourceMaps::Offset
+  Mapping = SourceMaps::Mapping
 
   def setup
     @mapping = Mapping.new('script.js', Offset.new(1, 8), Offset.new(2, 9), 'hello')
@@ -212,12 +212,12 @@ class TestMapping < Test::Unit::TestCase
   end
 
   def test_inspect
-    assert_equal "#<Sprockets::SourceMap::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
+    assert_equal "#<SourceMaps::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
   end
 end
 
 class TestOffset < Test::Unit::TestCase
-  Offset = Sprockets::SourceMap::Offset
+  Offset = SourceMaps::Offset
 
   def setup
     @offset = Offset.new(1, 5)
@@ -236,7 +236,7 @@ class TestOffset < Test::Unit::TestCase
   end
 
   def test_inspect
-    assert_equal "#<Sprockets::SourceMap::Offset line=1, column=5>", @offset.inspect
+    assert_equal "#<SourceMaps::Offset line=1, column=5>", @offset.inspect
   end
 
   def test_add_offset

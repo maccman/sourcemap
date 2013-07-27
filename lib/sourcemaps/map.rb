@@ -1,4 +1,5 @@
-require 'sprockets/vlq'
+require 'json'
+require 'sourcemaps/mappings'
 
 module SourceMaps
   class Map

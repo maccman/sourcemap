@@ -1,3 +1,5 @@
+require 'sourcemaps/offset'
+
 module SourceMaps
   class Mapping
     include Comparable
