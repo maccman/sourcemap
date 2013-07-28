@@ -1,2 +1,1 @@
-module SourceMap
-end
+require 'source_map'

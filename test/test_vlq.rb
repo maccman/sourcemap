@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'sourcemap/vlq'
+require 'source_map/vlq'
 
 class TestVLQ < MiniTest::Test
   TESTS = {

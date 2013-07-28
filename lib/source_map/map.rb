@@ -1,5 +1,5 @@
 require 'json'
-require 'sourcemap/mappings'
+require 'source_map/mappings'
 
 module SourceMap
   class Map

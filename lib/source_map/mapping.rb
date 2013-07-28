@@ -1,4 +1,4 @@
-require 'sourcemap/offset'
+require 'source_map/offset'
 
 module SourceMap
   class Mapping

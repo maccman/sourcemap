@@ -1,6 +1,6 @@
-require 'sourcemap/mapping'
-require 'sourcemap/offset'
-require 'sourcemap/vlq'
+require 'source_map/mapping'
+require 'source_map/offset'
+require 'source_map/vlq'
 
 module SourceMap
   class Mappings
