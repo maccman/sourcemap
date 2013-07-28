@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'sourcemaps/vlq'
+require 'sourcemap/vlq'
 
 class TestVLQ < MiniTest::Test
   TESTS = {
@@ -22,19 +22,19 @@ class TestVLQ < MiniTest::Test
 
   def test_encode
     TESTS.each do |str, int|
-      assert_equal str, SourceMaps::VLQ.encode(int)
+      assert_equal str, SourceMap::VLQ.encode(int)
     end
   end
 
   def test_decode
     TESTS.each do |str, int|
-      assert_equal int, SourceMaps::VLQ.decode(str)
+      assert_equal int, SourceMap::VLQ.decode(str)
     end
   end
 
   def test_encode_decode
     (-255..255).each do |int|
-      assert_equal [int], SourceMaps::VLQ.decode(SourceMaps::VLQ.encode([int]))
+      assert_equal [int], SourceMap::VLQ.decode(SourceMap::VLQ.encode([int]))
     end
   end
 end

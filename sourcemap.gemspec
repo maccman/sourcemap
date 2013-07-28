@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sourcemaps/version'
+require 'sourcemap/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sourcemaps"
-  spec.version       = SourceMaps::VERSION
+  spec.name          = "sourcemap"
+  spec.version       = SourceMap::VERSION
   spec.authors       = ["Alex MacCaw"]
   spec.email         = ["maccman@gmail.com"]
   spec.description   = %q{TODO: Write a gem description}

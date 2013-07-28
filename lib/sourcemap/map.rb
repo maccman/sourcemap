@@ -1,7 +1,7 @@
 require 'json'
-require 'sourcemaps/mappings'
+require 'sourcemap/mappings'
 
-module SourceMaps
+module SourceMap
   class Map
     def self.from_json(json)
       from_hash JSON.parse(json)

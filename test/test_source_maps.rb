@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'sourcemaps/map'
+require 'sourcemap/map'
 
 class TestSourceMap < MiniTest::Test
   def test_mappings
@@ -11,7 +11,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["script.js"],
       'names' => ["hello", "console", "log"]
     }
-    map = SourceMaps::Map.from_hash(hash)
+    map = SourceMap::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -47,7 +47,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["example.coffee"],
       'names' => ["number", "opposite", "square", "list", "math", "race", "cubes"]
     }
-    map = SourceMaps::Map.from_hash(hash)
+    map = SourceMap::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 6, mapping.generated.line
@@ -81,7 +81,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["example.js"],
       'names' => ["list","math","num","square","x","Math","sqrt","cube","elvis","alert","_i","_len","_results","length","push","call"]
     }
-    map = SourceMaps::Map.from_hash(hash)
+    map = SourceMap::Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -109,9 +109,9 @@ end
 
 
 class TestMappings < MiniTest::Test
-  Offset   = SourceMaps::Offset
-  Mapping  = SourceMaps::Mapping
-  Mappings = SourceMaps::Mappings
+  Offset   = SourceMap::Offset
+  Mapping  = SourceMap::Mapping
+  Mappings = SourceMap::Mappings
 
   def setup
     @mappings = Mappings.new([
@@ -158,8 +158,8 @@ class TestMappings < MiniTest::Test
 end
 
 class TestMapping < MiniTest::Test
-  Offset  = SourceMaps::Offset
-  Mapping = SourceMaps::Mapping
+  Offset  = SourceMap::Offset
+  Mapping = SourceMap::Mapping
 
   def setup
     @mapping = Mapping.new('script.js', Offset.new(1, 8), Offset.new(2, 9), 'hello')
@@ -212,12 +212,12 @@ class TestMapping < MiniTest::Test
   end
 
   def test_inspect
-    assert_equal "#<SourceMaps::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
+    assert_equal "#<SourceMap::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
   end
 end
 
 class TestOffset < MiniTest::Test
-  Offset = SourceMaps::Offset
+  Offset = SourceMap::Offset
 
   def setup
     @offset = Offset.new(1, 5)
@@ -236,7 +236,7 @@ class TestOffset < MiniTest::Test
   end
 
   def test_inspect
-    assert_equal "#<SourceMaps::Offset line=1, column=5>", @offset.inspect
+    assert_equal "#<SourceMap::Offset line=1, column=5>", @offset.inspect
   end
 
   def test_add_offset

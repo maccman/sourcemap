@@ -1,8 +1,8 @@
-require 'sourcemaps/mapping'
-require 'sourcemaps/offset'
-require 'sourcemaps/vlq'
+require 'sourcemap/mapping'
+require 'sourcemap/offset'
+require 'sourcemap/vlq'
 
-module SourceMaps
+module SourceMap
   class Mappings
     include Enumerable
 

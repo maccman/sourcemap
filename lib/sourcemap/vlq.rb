@@ -1,4 +1,4 @@
-module SourceMaps
+module SourceMap
   # Base64 VLQ encoding
   #
   # Adopted from ConradIrwin/ruby-source_map

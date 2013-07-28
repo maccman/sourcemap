@@ -1,4 +1,4 @@
-module SourceMaps
+module SourceMap
   class Offset
     include Comparable
 
