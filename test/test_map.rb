@@ -1,7 +1,9 @@
 require 'minitest/autorun'
 require 'source_map/map'
 
-class TestSourceMap < MiniTest::Test
+class TestMap < MiniTest::Test
+  include SourceMap
+
   def test_mappings
     hash = {
       'version' => 3,
@@ -11,7 +13,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["script.js"],
       'names' => ["hello", "console", "log"]
     }
-    map = SourceMap::Map.from_hash(hash)
+    map = Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -47,7 +49,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["example.coffee"],
       'names' => ["number", "opposite", "square", "list", "math", "race", "cubes"]
     }
-    map = SourceMap::Map.from_hash(hash)
+    map = Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 6, mapping.generated.line
@@ -81,7 +83,7 @@ class TestSourceMap < MiniTest::Test
       'sources' => ["example.js"],
       'names' => ["list","math","num","square","x","Math","sqrt","cube","elvis","alert","_i","_len","_results","length","push","call"]
     }
-    map = SourceMap::Map.from_hash(hash)
+    map = Map.from_hash(hash)
 
     assert mapping = map.mappings[0]
     assert_equal 1, mapping.generated.line
@@ -104,158 +106,5 @@ class TestSourceMap < MiniTest::Test
     assert_equal hash['sources'],   map.sources
     assert_equal hash['names'],     map.names
     assert_equal hash['mappings'],  map.mappings.to_s
-  end
-end
-
-
-class TestMappings < MiniTest::Test
-  Offset   = SourceMap::Offset
-  Mapping  = SourceMap::Mapping
-  Mappings = SourceMap::Mappings
-
-  def setup
-    @mappings = Mappings.new([
-      Mapping.new('a.js', Offset.new(0, 0), Offset.new(0, 0)),
-      Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
-      Mapping.new('c.js', Offset.new(2, 0), Offset.new(30, 0))
-    ])
-  end
-
-  def test_line_count
-    # assert_equal 3, @mappings.line_count
-  end
-
-  def test_to_s
-    assert_equal "ACoBA;ACUA;", @mappings.to_s
-  end
-
-  def test_sources
-    assert_equal ["a.js", "b.js", "c.js"], @mappings.sources
-  end
-
-  def test_names
-    assert_equal [], @mappings.names
-  end
-
-  def test_add
-    mappings2 = Mappings.new([
-      Mapping.new('d.js', Offset.new(0, 0), Offset.new(0, 0))
-    ])
-    mappings3 = @mappings + mappings2
-    assert_equal 0, mappings3[0].generated.line
-    assert_equal 1, mappings3[1].generated.line
-    assert_equal 2, mappings3[2].generated.line
-    assert_equal 3, mappings3[3].generated.line
-  end
-
-  def test_bsearch
-    assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 0)).original
-    assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 5)).original
-    assert_equal Offset.new(20, 0), @mappings.bsearch(Offset.new(1, 0)).original
-    assert_equal Offset.new(20, 0), @mappings.bsearch(Offset.new(1, 0)).original
-    assert_equal Offset.new(30, 0), @mappings.bsearch(Offset.new(2, 0)).original
-  end
-end
-
-class TestMapping < MiniTest::Test
-  Offset  = SourceMap::Offset
-  Mapping = SourceMap::Mapping
-
-  def setup
-    @mapping = Mapping.new('script.js', Offset.new(1, 8), Offset.new(2, 9), 'hello')
-  end
-
-  def test_generated
-    assert_equal 1, @mapping.generated.line
-    assert_equal 8, @mapping.generated.column
-  end
-
-  def test_original
-    assert_equal 2, @mapping.original.line
-    assert_equal 9, @mapping.original.column
-  end
-
-  def test_source
-    assert_equal 'script.js', @mapping.source
-  end
-
-  def test_name
-    assert_equal 'hello', @mapping.name
-  end
-
-  def test_compare
-    assert @mapping == @mapping
-    assert @mapping <= @mapping
-    assert @mapping >= @mapping
-
-    other = Mapping.new('script.js', Offset.new(2, 0), Offset.new(3, 0), 'goodbye')
-    assert @mapping < other
-    assert other > @mapping
-
-    other = Mapping.new('script.js', Offset.new(1, 9), Offset.new(3, 0), 'goodbye')
-    assert @mapping < other
-    assert other > @mapping
-  end
-
-  def test_compare_offset
-    other = Offset.new(1, 8)
-
-    assert @mapping == other
-    assert @mapping <= other
-    assert @mapping >= other
-
-    other = Offset.new(2, 0)
-    assert @mapping < other
-
-    other = Offset.new(1, 9)
-    assert @mapping < other
-  end
-
-  def test_inspect
-    assert_equal "#<SourceMap::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
-  end
-end
-
-class TestOffset < MiniTest::Test
-  Offset = SourceMap::Offset
-
-  def setup
-    @offset = Offset.new(1, 5)
-  end
-
-  def test_line
-    assert_equal 1, @offset.line
-  end
-
-  def test_column
-    assert_equal 5, @offset.column
-  end
-
-  def test_to_s
-    assert_equal "1:5", @offset.to_s
-  end
-
-  def test_inspect
-    assert_equal "#<SourceMap::Offset line=1, column=5>", @offset.inspect
-  end
-
-  def test_add_offset
-    offset = @offset + Offset.new(2, 1)
-    assert_equal 3, offset.line
-    assert_equal 6, offset.column
-  end
-
-  def test_add_line
-    offset = @offset + 5
-    assert_equal 6, offset.line
-    assert_equal 5, offset.column
-  end
-
-  def test_compare
-    assert @offset < Offset.new(2, 0)
-    assert @offset < Offset.new(1, 6)
-    assert @offset > Offset.new(1, 4)
-    assert @offset >= Offset.new(1, 5)
-    assert @offset <= Offset.new(1, 5)
   end
 end
