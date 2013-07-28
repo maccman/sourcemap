@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'sourcemaps/vlq'
 
-class TestVLQ < Test::Unit::TestCase
+class TestVLQ < MiniTest::Test
   TESTS = {
     'A'          => [0],
     'C'          => [1],

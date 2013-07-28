@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'sourcemaps/map'
 
-class TestSourceMap < Test::Unit::TestCase
+class TestSourceMap < MiniTest::Test
   def test_mappings
     hash = {
       'version' => 3,
@@ -108,7 +108,7 @@ class TestSourceMap < Test::Unit::TestCase
 end
 
 
-class TestMappings < Test::Unit::TestCase
+class TestMappings < MiniTest::Test
   Offset   = SourceMaps::Offset
   Mapping  = SourceMaps::Mapping
   Mappings = SourceMaps::Mappings
@@ -157,7 +157,7 @@ class TestMappings < Test::Unit::TestCase
   end
 end
 
-class TestMapping < Test::Unit::TestCase
+class TestMapping < MiniTest::Test
   Offset  = SourceMaps::Offset
   Mapping = SourceMaps::Mapping
 
@@ -216,7 +216,7 @@ class TestMapping < Test::Unit::TestCase
   end
 end
 
-class TestOffset < Test::Unit::TestCase
+class TestOffset < MiniTest::Test
   Offset = SourceMaps::Offset
 
   def setup
