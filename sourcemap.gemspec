@@ -6,11 +6,11 @@ require 'source_map/version'
 Gem::Specification.new do |spec|
   spec.name          = "sourcemap"
   spec.version       = SourceMap::VERSION
-  spec.authors       = ["Alex MacCaw"]
-  spec.email         = ["maccman@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.authors       = ["Josh Peek", "Alex MacCaw"]
+  spec.email         = ["alex@alexmaccaw.com"]
+  spec.description   = %q{Ruby source maps}
+  spec.summary       = %q{Ruby source maps}
+  spec.homepage      = "http://github.com/maccman/sourcemap"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

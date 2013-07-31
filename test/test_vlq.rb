@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'source_map/vlq'
 
-class TestVLQ < MiniTest::Test
+class TestVLQ < MiniTest::Unit::TestCase
   include SourceMap
 
   TESTS = {
