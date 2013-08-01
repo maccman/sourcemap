@@ -5,7 +5,7 @@ module SourceMap
     include Comparable
 
     def initialize(source, generated, original, name = nil)
-      @source, @generated, @original = source, generated, original
+      @source, @generated, @original = source, Offset.new(generated), Offset.new(original)
       @name = name
     end
 
