@@ -12,9 +12,9 @@ module SourceMap
       when Offset
         args.first
       when Array
-        super *args.first
+        super(*args.first)
       else
-        super *args
+        super(*args)
       end
     end
 
