@@ -1,5 +1,5 @@
 module SourceMap
-  # Base64 VLQ encoding
+  # Public: Base64 VLQ encoding
   #
   # Adopted from ConradIrwin/ruby-source_map
   #   https://github.com/ConradIrwin/ruby-source_map/blob/master/lib/source_map/vlq.rb
@@ -19,6 +19,11 @@ module SourceMap
     BASE64_DIGITS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('')
     BASE64_VALUES = (0...64).inject({}) { |h, i| h[BASE64_DIGITS[i]] = i; h }
 
+    # Public: Encode a list of numbers into a compact VLQ string.
+    #
+    # ary - An Array of Integers
+    #
+    # Returns an VLQ String.
     def self.encode(ary)
       result = ""
       ary.each do |n|
@@ -33,6 +38,11 @@ module SourceMap
       result
     end
 
+    # Public: Decode a VLQ string.
+    #
+    # str - VLQ encoded String
+    #
+    # Returns an Array of Integers.
     def self.decode(str)
       result = []
       chars = str.split('')
