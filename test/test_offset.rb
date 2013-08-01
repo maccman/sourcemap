@@ -8,6 +8,16 @@ class TestOffset < MiniTest::Unit::TestCase
     @offset = Offset.new(1, 5)
   end
 
+  def test_equal
+    assert Offset.new(1, 5) == @offset
+    assert Offset.new(1, 6) != @offset
+    assert Offset.new(2, 5) != @offset
+  end
+
+  def test_from_array
+    assert Offset.new(1, 5) == Offset.new([1, 5])
+  end
+
   def test_line
     assert_equal 1, @offset.line
   end

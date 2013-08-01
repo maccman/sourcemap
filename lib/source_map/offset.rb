@@ -8,8 +8,12 @@ module SourceMap
     #
     # line   - Integer line number
     # column - Integer column number
-    def initialize(line, column)
-      @line, @column = line, column
+    def initialize(line, column = nil)
+      if line.is_a?(Array)
+        @line, @column = line
+      else
+        @line, @column = line, column
+      end
     end
 
     # Public: Gets Integer line of offset
