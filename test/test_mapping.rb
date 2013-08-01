@@ -5,7 +5,7 @@ class TestMapping < MiniTest::Unit::TestCase
   include SourceMap
 
   def setup
-    @mapping = Mapping.new('script.js', Offset.new(1, 8), Offset.new(2, 9), 'hello')
+    @mapping = Mapping.new('script.js', [1, 8], [2, 9], 'hello')
   end
 
   def test_generated
@@ -31,11 +31,11 @@ class TestMapping < MiniTest::Unit::TestCase
     assert @mapping <= @mapping
     assert @mapping >= @mapping
 
-    other = Mapping.new('script.js', Offset.new(2, 0), Offset.new(3, 0), 'goodbye')
+    other = Mapping.new('script.js', [2, 0], [3, 0], 'goodbye')
     assert @mapping < other
     assert other > @mapping
 
-    other = Mapping.new('script.js', Offset.new(1, 9), Offset.new(3, 0), 'goodbye')
+    other = Mapping.new('script.js', [1, 9], [3, 0], 'goodbye')
     assert @mapping < other
     assert other > @mapping
   end
