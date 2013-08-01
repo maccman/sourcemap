@@ -4,16 +4,26 @@ module SourceMap
   class Offset
     include Comparable
 
+    # Public: Construct Offset value.
+    #
+    # Returns Offset instance.
+    def self.new(*args)
+      case args.first
+      when Offset
+        args.first
+      when Array
+        super *args.first
+      else
+        super *args
+      end
+    end
+
     # Public: Initialize an Offset.
     #
     # line   - Integer line number
     # column - Integer column number
-    def initialize(line, column = nil)
-      if line.is_a?(Array)
-        @line, @column = line
-      else
-        @line, @column = line, column
-      end
+    def initialize(line, column)
+      @line, @column = line, column
     end
 
     # Public: Gets Integer line of offset

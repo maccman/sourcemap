@@ -18,6 +18,10 @@ class TestOffset < MiniTest::Unit::TestCase
     assert Offset.new(1, 5) == Offset.new([1, 5])
   end
 
+  def test_from_offset
+    assert @offset == Offset.new(@offset)
+  end
+
   def test_line
     assert_equal 1, @offset.line
   end
