@@ -108,7 +108,7 @@ module SourceMap
       return self[low-1] if low > high
       mid = (low + high) / 2
       return self[mid] if self[mid] == offset
-      if self[mid] > offset
+      if self[mid].generated > offset
         high = mid - 1
       else
         low = mid + 1

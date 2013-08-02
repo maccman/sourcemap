@@ -26,34 +26,6 @@ class TestMapping < MiniTest::Unit::TestCase
     assert_equal 'hello', @mapping.name
   end
 
-  def test_compare
-    assert @mapping == @mapping
-    assert @mapping <= @mapping
-    assert @mapping >= @mapping
-
-    other = Mapping.new('script.js', [2, 0], [3, 0], 'goodbye')
-    assert @mapping < other
-    assert other > @mapping
-
-    other = Mapping.new('script.js', [1, 9], [3, 0], 'goodbye')
-    assert @mapping < other
-    assert other > @mapping
-  end
-
-  def test_compare_offset
-    other = Offset.new(1, 8)
-
-    assert @mapping == other
-    assert @mapping <= other
-    assert @mapping >= other
-
-    other = Offset.new(2, 0)
-    assert @mapping < other
-
-    other = Offset.new(1, 9)
-    assert @mapping < other
-  end
-
   def test_inspect
     assert_equal "#<SourceMap::Mapping generated=1:8, original=2:9, source=script.js, name=hello>", @mapping.inspect
   end
