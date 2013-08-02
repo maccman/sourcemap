@@ -4,7 +4,15 @@ require 'source_map/map'
 class TestMap < MiniTest::Unit::TestCase
   include SourceMap
 
-  def test_mappings
+  def setup
+    @mappings = Map.new([
+      Mapping.new('a.js', Offset.new(0, 0), Offset.new(0, 0)),
+      Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
+      Mapping.new('c.js', Offset.new(2, 0), Offset.new(30, 0))
+    ])
+  end
+
+  def test_map
     hash = {
       'version' => 3,
       'file' => "script.min.js",
@@ -15,7 +23,7 @@ class TestMap < MiniTest::Unit::TestCase
     }
     map = Map.from_hash(hash)
 
-    assert mapping = map.mappings[0]
+    assert mapping = map[0]
     assert_equal 1, mapping.generated.line
     assert_equal 0, mapping.generated.column
     assert_equal 2, mapping.original.line
@@ -23,7 +31,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'script.js', mapping.source
     assert_equal 'hello', mapping.name
 
-    assert mapping = map.mappings[-1]
+    assert mapping = map[-1]
     assert_equal 1, mapping.generated.line
     assert_equal 45, mapping.generated.column
     assert_equal 2, mapping.original.line
@@ -31,16 +39,15 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'script.js', mapping.source
     assert_equal nil, mapping.name
 
-    assert_equal hash['version'],   map.version
     assert_equal hash['lineCount'], map.line_count
     assert_equal hash['sources'],   map.sources
     assert_equal hash['names'],     map.names
-    assert_equal hash['mappings'],  map.mappings.to_s
+    assert_equal hash['mappings'],  map.to_s
 
     assert_equal hash, map.as_json
   end
 
-  def test_mappings2
+  def test_map2
     hash = {
       'version' => 3,
       'file' => "example.js",
@@ -51,7 +58,7 @@ class TestMap < MiniTest::Unit::TestCase
     }
     map = Map.from_hash(hash)
 
-    assert mapping = map.mappings[0]
+    assert mapping = map[0]
     assert_equal 6, mapping.generated.line
     assert_equal 2, mapping.generated.column
     assert_equal 1, mapping.original.line
@@ -59,7 +66,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'example.coffee', mapping.source
     assert_equal 'number', mapping.name
 
-    assert mapping = map.mappings[-1]
+    assert mapping = map[-1]
     assert_equal 43, mapping.generated.line
     assert_equal 6, mapping.generated.column
     assert_equal 27, mapping.original.line
@@ -67,14 +74,13 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'example.coffee', mapping.source
     assert_equal nil, mapping.name
 
-    assert_equal hash['version'],   map.version
     assert_equal hash['lineCount'], map.line_count
     assert_equal hash['sources'],   map.sources
     assert_equal hash['names'],     map.names
-    assert_equal hash['mappings'],  map.mappings.to_s
+    assert_equal hash['mappings'],  map.to_s
   end
 
-  def test_mappings3
+  def test_map3
     hash = {
       'version' => 3,
       'file' => "example.min.js",
@@ -85,7 +91,7 @@ class TestMap < MiniTest::Unit::TestCase
     }
     map = Map.from_hash(hash)
 
-    assert mapping = map.mappings[0]
+    assert mapping = map[0]
     assert_equal 1, mapping.generated.line
     assert_equal 0, mapping.generated.column
     assert_equal 1, mapping.original.line
@@ -93,7 +99,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'example.js', mapping.source
     assert_equal nil, mapping.name
 
-    assert mapping = map.mappings[-1]
+    assert mapping = map[-1]
     assert_equal 1, mapping.generated.line
     assert_equal 289, mapping.generated.column
     assert_equal 1, mapping.original.line
@@ -101,10 +107,44 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 'example.js', mapping.source
     assert_equal nil, mapping.name
 
-    assert_equal hash['version'],   map.version
     assert_equal hash['lineCount'], map.line_count
     assert_equal hash['sources'],   map.sources
     assert_equal hash['names'],     map.names
-    assert_equal hash['mappings'],  map.mappings.to_s
+    assert_equal hash['mappings'],  map.to_s
+  end
+
+  def test_line_count
+    # assert_equal 3, @mappings.line_count
+  end
+
+  def test_to_s
+    assert_equal "ACoBA;ACUA;", @mappings.to_s
+  end
+
+  def test_sources
+    assert_equal ["a.js", "b.js", "c.js"], @mappings.sources
+  end
+
+  def test_names
+    assert_equal [], @mappings.names
+  end
+
+  def test_add
+    mappings2 = Map.new([
+      Mapping.new('d.js', Offset.new(0, 0), Offset.new(0, 0))
+    ])
+    mappings3 = @mappings + mappings2
+    assert_equal 0, mappings3[0].generated.line
+    assert_equal 1, mappings3[1].generated.line
+    assert_equal 2, mappings3[2].generated.line
+    assert_equal 3, mappings3[3].generated.line
+  end
+
+  def test_bsearch
+    assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 0)).original
+    assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 5)).original
+    assert_equal Offset.new(20, 0), @mappings.bsearch(Offset.new(1, 0)).original
+    assert_equal Offset.new(20, 0), @mappings.bsearch(Offset.new(1, 0)).original
+    assert_equal Offset.new(30, 0), @mappings.bsearch(Offset.new(2, 0)).original
   end
 end
