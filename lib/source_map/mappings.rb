@@ -1,8 +1,9 @@
-require 'source_map/mapping'
 require 'source_map/offset'
 require 'source_map/vlq'
 
 module SourceMap
+  Mapping = Struct.new(:source, :generated, :original, :name)
+
   class Mappings
     include Enumerable
 
