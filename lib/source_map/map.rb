@@ -130,6 +130,10 @@ module SourceMap
       self.class.new(mappings)
     end
 
+    def |(other)
+      self
+    end
+
     def bsearch(offset, low = 0, high = size - 1)
       return self[low-1] if low > high
       mid = (low + high) / 2

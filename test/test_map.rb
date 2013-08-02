@@ -140,6 +140,34 @@ class TestMap < MiniTest::Unit::TestCase
     assert_equal 3, mappings3[3].generated.line
   end
 
+  def test_pipe
+    mappings1 = Map.from_hash({
+      'version'     => 3,
+      'file'        => 'script.js',
+      'sourceRoot'  => '',
+      'sources'     => [
+      'script.coffee'
+      ],
+      'names'       => [],
+      'mappings'    => ';AAAA;CAAA,KAAA,CAAA;;CAAA,CAAA,CAAU,IAAV,EAAU;CACR,YADQ;CAAV,EAAU;;CAAV,CAGA,CAAc,CAAd,EAAM,GAAQ;CACZ,EAAA,CAAA,GAAO;CACP,MAAA,IAAA;CALF,EAGc;CAHd'
+    })
+
+    mappings2 = Map.from_hash({
+      'version'     => 3,
+      'file'        => 'script.min.js',
+      'sourceRoot'  => '',
+      'sources'     => [
+        'script.js'
+      ],
+      'names'       => [],
+      'mappings' => 'CACA,WACE,GAAIA,QAEJA,SAAU,WACR,SAGFC,QAAOC,KAAO,WACZC,QAAQC,IAAI,KACZ,OAAOJ,aAGRK,KAAKC'
+    })
+
+    mappings3 = mappings1 | mappings2
+
+    assert_equal 'CAAA,WAAA,GAAA,QAAA,SAAU,WACR,SAEF,QAAc,KAAA,WACZ,QAAO,IAAA,KACP,OAAA,aALF,KAAA', mappings3.to_s
+  end
+
   def test_bsearch
     assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 0)).original
     assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 5)).original
