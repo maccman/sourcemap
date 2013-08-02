@@ -25,7 +25,3 @@
   }
 
 }).call(this);
-
-/*
-//@ sourceMappingURL=bar.map
-*/
