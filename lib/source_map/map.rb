@@ -14,10 +14,35 @@ module SourceMap
     end
 
     def self.from_hash(hash)
-      from_vlq(hash['mappings'], hash['sources'], hash['names'], hash['file'], hash['version'])
+      str     = hash['mappings']
+      sources = hash['sources']
+      names   = hash['names']
+
+      mappings = decode_vlq_mappings(str, sources, names)
+      map = new(mappings, hash['file'])
+
+      # Debug sanity checking. Eventually remove these validations
+      if map.sources != sources
+        raise "DEBUG: #{map.sources.inspect} didn't equal #{sources.inspect}"
+      end
+      if map.names != names
+        raise "DEBUG: #{map.names.inspect} didn't equal #{names.inspect}"
+      end
+      if map.to_s != str
+        raise "DEBUG: #{map.to_s.inspect} didn't equal #{str.inspect}"
+      end
+
+      map
     end
 
-    def self.from_vlq(str, sources = [], names = [], filename = nil, version = 3)
+    # Internal: Decode VLQ mappings and match up sources and symbol names.
+    #
+    # str     - VLQ string from 'mappings' attribute
+    # sources - Array of Strings from 'sources' attribute
+    # names   - Array of Strings from 'names' attribute
+    #
+    # Returns an Array of Mappings.
+    def self.decode_vlq_mappings(str, sources = [], names = [])
       mappings = []
 
       generated_line   = 0
@@ -58,24 +83,11 @@ module SourceMap
         end
       end
 
-      new(mappings, :vlq => str, :sources => sources, :names => names, :file => filename)
+      mappings
     end
 
-    def initialize(mappings = [], attrs = {})
-      @mappings = mappings
-      @filename = attrs[:file]
-
-      if attrs.key?(:sources) && sources != attrs[:sources]
-        raise "DEBUG: #{sources.inspect} didn't equal #{attrs[:sources].inspect}"
-      end
-
-      if attrs.key?(:names) && names != attrs[:names]
-        raise "DEBUG: #{names.inspect} didn't equal #{attrs[:names].inspect}"
-      end
-
-      if attrs.key?(:vlq) && to_s != attrs[:vlq]
-        raise "DEBUG: #{to_s.inspect} didn't equal #{attrs[:vlq].inspect}"
-      end
+    def initialize(mappings = [], filename = nil)
+      @mappings, @filename = mappings, filename
     end
 
     attr_reader :filename
