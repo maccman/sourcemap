@@ -45,20 +45,16 @@ module SourceMap
     def self.decode_vlq_mappings(str, sources = [], names = [])
       mappings = []
 
-      generated_line   = 0
-      generated_column = 0
-      source_id        = 0
-      original_line    = 0
-      original_column  = 0
-      name_id          = 0
+      source_id       = 0
+      original_line   = 0
+      original_column = 0
+      name_id         = 0
 
-      str.split(';').each do |group|
+      VLQ.decode_mappings(str).each_with_index do |group, index|
         generated_column = 0
-        generated_line += 1
+        generated_line   = index + 1
 
-        group.split(',').each do |segment|
-          segment = VLQ.decode(segment)
-
+        (group || []).each do |segment|
           generated_column += segment[0]
           generated = Offset.new(generated_line, generated_column)
 
@@ -166,7 +162,7 @@ module SourceMap
 
         by_lines = @mappings.group_by { |m| m.generated.line }
 
-        (1..by_lines.keys.max).map do |line|
+        ary = (1..by_lines.keys.max).map do |line|
           generated_column = 0
 
           (by_lines[line] || []).map do |mapping|
@@ -183,9 +179,11 @@ module SourceMap
             source_column    = mapping.original.column
             name_id          = names_index[mapping.name] if mapping.name
 
-            VLQ.encode(group)
-          end.join(",")
-        end.join(";")
+            group
+          end
+        end
+
+        VLQ.encode_mappings(ary)
       end
 
       def sources_index
