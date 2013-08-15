@@ -23,13 +23,13 @@ module SourceMap
 
       # Debug sanity checking. Eventually remove these validations
       if map.sources != sources
-        raise "DEBUG: #{map.sources.inspect} didn't equal #{sources.inspect}"
+        warn "DEBUG: #{map.sources.inspect} didn't equal #{sources.inspect}"
       end
       if map.names != names
-        raise "DEBUG: #{map.names.inspect} didn't equal #{names.inspect}"
+        warn "DEBUG: #{map.names.inspect} didn't equal #{names.inspect}"
       end
       if map.to_s != str
-        raise "DEBUG: #{map.to_s.inspect} didn't equal #{str.inspect}"
+        warn "DEBUG: #{map.to_s.inspect} didn't equal #{str.inspect}"
       end
 
       map
