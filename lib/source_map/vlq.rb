@@ -23,7 +23,7 @@ module SourceMap
     #
     # ary - An Array of Integers
     #
-    # Returns an VLQ String.
+    # Returns a VLQ String.
     def self.encode(ary)
       result = ""
       ary.each do |n|
@@ -62,6 +62,37 @@ module SourceMap
         result << (vlq & 1 == 1 ? -(vlq >> 1) : vlq >> 1)
       end
       result
+    end
+
+    # Public: Encode a mapping array into a compact VLQ string.
+    #
+    # ary - Two dimensional Array of Integers.
+    #
+    # Returns a VLQ encoded String seperated by , and ;.
+    def self.encode_mappings(ary)
+      ary.map { |group|
+        (group || []).map { |segment|
+          encode(segment)
+        }.join(',')
+      }.join(';')
+    end
+
+    # Public: Decode a VLQ string into mapping numbers.
+    #
+    # str - VLQ encoded String
+    #
+    # Returns an two dimensional Array of Integers.
+    def self.decode_mappings(str)
+      mappings = []
+
+      str.split(';').each_with_index do |group, index|
+        group.split(',').each do |segment|
+          mappings[index] ||= []
+          mappings[index] << decode(segment)
+        end
+      end
+
+      mappings
     end
   end
 end
