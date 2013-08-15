@@ -166,7 +166,7 @@ module SourceMap
 
         by_lines = @mappings.group_by { |m| m.generated.line }
 
-        (1..by_lines.keys.max+1).map do |line|
+        (1..by_lines.keys.max).map do |line|
           generated_column = 0
 
           (by_lines[line] || []).map do |mapping|
