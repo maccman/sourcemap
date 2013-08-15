@@ -54,7 +54,7 @@ module SourceMap
         generated_column = 0
         generated_line   = index + 1
 
-        (group || []).each do |segment|
+        group.each do |segment|
           generated_column += segment[0]
           generated = Offset.new(generated_line, generated_column)
 

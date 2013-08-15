@@ -71,7 +71,7 @@ module SourceMap
     # Returns a VLQ encoded String seperated by , and ;.
     def self.encode_mappings(ary)
       ary.map { |group|
-        (group || []).map { |segment|
+        group.map { |segment|
           encode(segment)
         }.join(',')
       }.join(';')
@@ -86,8 +86,8 @@ module SourceMap
       mappings = []
 
       str.split(';').each_with_index do |group, index|
+        mappings[index] = []
         group.split(',').each do |segment|
-          mappings[index] ||= []
           mappings[index] << decode(segment)
         end
       end
