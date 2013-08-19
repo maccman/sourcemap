@@ -4,7 +4,11 @@ require 'source_map/offset'
 require 'source_map/vlq'
 
 module SourceMap
-  Mapping = Struct.new(:source, :generated, :original, :name)
+  Mapping = Struct.new(:source, :generated, :original, :name) do
+    def to_s
+      "#{generated.line}:#{generated.column}->#{original.line}:#{original.column}"
+    end
+  end
 
   class Map
     include Enumerable
@@ -117,17 +121,30 @@ module SourceMap
     end
 
     def +(other)
-      mappings = []
-      mappings += @mappings
-      offset = line_count+1
+      mappings = @mappings.dup
+      offset   = line_count + 1
       other.each do |m|
-        mappings << Mapping.new(m.source, m.generated + offset, m.original, m.name)
+        mappings << Mapping.new(
+          m.source, m.generated + offset,
+          m.original, m.name
+        )
       end
       self.class.new(mappings)
     end
 
     def |(other)
-      self
+      mappings = []
+
+      other.each do |m|
+        om = bsearch(m.original)
+
+        mappings << Mapping.new(
+          om.source, m.generated,
+          om.original, om.name
+        )
+      end
+
+      self.class.new(mappings)
     end
 
     def bsearch(offset, low = 0, high = size - 1)
