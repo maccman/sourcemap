@@ -140,6 +140,13 @@ class TestMap < MiniTest::Test
     assert_equal 3, mappings3[3].generated.line
   end
 
+  def test_add_identity
+    identity_map = Map.new
+
+    assert_equal @mappings, identity_map + @mappings
+    assert_equal @mappings, @mappings + identity_map
+  end
+
   def test_pipe
     mappings1 = Map.from_json(%{
       {
