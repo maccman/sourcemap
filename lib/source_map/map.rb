@@ -25,20 +25,7 @@ module SourceMap
       names   = hash['names']
 
       mappings = decode_vlq_mappings(str, sources, names)
-      map = new(mappings, hash['file'])
-
-      # Debug sanity checking. Eventually remove these validations
-      if map.sources != sources
-        warn "DEBUG: #{map.sources.inspect} didn't equal #{sources.inspect}"
-      end
-      if map.names != names
-        warn "DEBUG: #{map.names.inspect} didn't equal #{names.inspect}"
-      end
-      if map.to_s != str
-        warn "DEBUG: #{map.to_s.inspect} didn't equal #{str.inspect}"
-      end
-
-      map
+      new(mappings, hash['file'])
     end
 
     # Internal: Decode VLQ mappings and match up sources and symbol names.
