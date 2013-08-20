@@ -8,6 +8,8 @@ module SourceMap
     def to_s
       "#{generated.line}:#{generated.column}->#{original.line}:#{original.column}"
     end
+
+    alias_method :inspect, :to_s
   end
 
   class Map
@@ -50,7 +52,7 @@ module SourceMap
       mappings = []
 
       source_id       = 0
-      original_line   = 0
+      original_line   = 1
       original_column = 0
       name_id         = 0
 
@@ -137,6 +139,7 @@ module SourceMap
 
       other.each do |m|
         om = bsearch(m.original)
+        next unless om
 
         mappings << Mapping.new(
           om.source, m.generated,
@@ -144,19 +147,27 @@ module SourceMap
         )
       end
 
-      self.class.new(mappings)
+      self.class.new(mappings, other.filename)
     end
 
-    def bsearch(offset, low = 0, high = size - 1)
-      return self[low-1] if low > high
-      mid = (low + high) / 2
-      return self[mid] if self[mid] == offset
-      if self[mid].generated > offset
-        high = mid - 1
-      else
-        low = mid + 1
+    def bsearch(offset, from = 0, to = size - 1)
+      mid = (from + to) / 2
+
+      # We haven't found a match
+      if from > to
+        return from < 1 ? nil : self[from-1]
       end
-      bsearch(offset, low, high)
+
+      # We found an exact match
+      if offset == self[mid].generated
+        self[mid]
+
+      # We need to filter more
+      elsif offset < self[mid].generated
+        bsearch(offset, from, mid - 1)
+      elsif offset > self[mid].generated
+        bsearch(offset, mid + 1, to)
+      end
     end
 
     def as_json
@@ -173,7 +184,7 @@ module SourceMap
     protected
       def build_vlq_string
         source_id        = 0
-        source_line      = 0
+        source_line      = 1
         source_column    = 0
         name_id          = 0
 

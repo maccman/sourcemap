@@ -141,34 +141,31 @@ class TestMap < MiniTest::Unit::TestCase
   end
 
   def test_pipe
-    mappings1 = Map.from_hash(
-      "version"=>3,
-      "file"=>"index.js",
-      "sourceRoot"=>"",
-      "sources"=>["index.coffee"],
-      "names"=>[],
-      "mappings"=>";AAAA;AAAA,MAAA,IAAA;;AAAA,EAAA,IAAA,GAAO,SAAA,GAAA;WACL,KAAA,CAAM,aAAN,EADK;EAAA,CAAP,CAAA;;AAGA,EAAA,IAAW,IAAX;AAAA,IAAG,IAAH,CAAA,CAAA,CAAA;GAHA;AAAA"
-    )
+    mappings1 = Map.from_json(%{
+      {
+        "version": 3,
+        "file": "index.js",
+        "sourceRoot": "",
+        "sources": [
+          "index.coffee"
+        ],
+        "names": [],
+        "mappings": ";AAAA;AAAA,MAAA,IAAA;;AAAA,EAAA,IAAA,GAAO,SAAA,GAAA;WACL,KAAA,CAAM,aAAN,EADK;EAAA,CAAP,CAAA;;AAGA,EAAA,IAAW,IAAX;AAAA,IAAG,IAAH,CAAA,CAAA,CAAA;GAHA;AAAA"
+      }
+    })
 
-    mappings2 = Map.from_hash(
-      "version"=>3,
-      "file"=>"index.min.js",
-      "sources"=>["index.js"],
-      "names"=>["test","alert","call","this"],
-      "mappings"=>"CACA,WACE,GAAIA,EAEJA,GAAO,WACL,MAAOC,OAAM,gBAIbD,KAGDE,KAAKC"
-    )
-
-    mappings3 = Map.from_hash(
-      "version"=>3,
-      "file"=>"index.min.js",
-      "sources"=>["index.coffee"],
-      "names"=>[],
-      "mappings"=>"CAAA,WAAA,GAAA,EAAA,GAAO,WAAA,MACL,OAAM,gBAEL,KAHH,KAAA"
-    )
+    mappings2 = Map.from_json(%{
+      {
+        "version":3,
+        "file":"index.min.js",
+        "sources":["index.js"],
+        "names":["test","alert","call","this"],
+        "mappings":"CACA,WACE,GAAIA,KAEJA,MAAO,WACL,MAAOC,OAAM,eAGf,IAAI,KAAM,CACRD,SAGDE,KAAKC"
+      }
+    })
 
     mappings3 = mappings1 | mappings2
-
-    assert_equal 'CAAA,WAAA,GAAA,EAAA,GAAO,WACC,MAAN,OAAA,gBAEC,KAHH,KAAA', mappings3.to_s
+    assert_equal 'CAAA,WAAA,GAAA,KAAA,MAAO,WAAA,MACL,OAAM,eAER,IAAW,KAAX,CAAG,SAHH,KAAA', mappings3.to_s
   end
 
   def test_bsearch
