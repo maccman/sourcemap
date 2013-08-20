@@ -7,9 +7,7 @@ A Ruby library to read, create and manipulate Source Maps.
 # Installation
 
     gem install sourcemap
-
     # or Bundler:
-
     gem 'sourcemap'
 
 # Usage
@@ -148,13 +146,13 @@ The method will return `nil` if an offset can't be found.
 
 Convert a `Map` instance back to JSON.
 
-  map = Map.new([
-    Mapping.new('a.js', Offset.new(0, 0), Offset.new(0, 0)),
-    Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
-    Mapping.new('c.js', Offset.new(2, 0), Offset.new(30, 0))
-  ])
+    map = Map.new([
+      Mapping.new('a.js', Offset.new(0, 0), Offset.new(0, 0)),
+      Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
+      Mapping.new('c.js', Offset.new(2, 0), Offset.new(30, 0))
+    ])
 
-  map.to_json #=> "{...}"
+    map.to_json #=> "{...}"
 
 ## Offset
 
