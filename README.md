@@ -12,9 +12,9 @@ A Ruby library to read, create and manipulate Source Maps.
 
     gem 'sourcemap'
 
-## Usage
+# Usage
 
-# Concatenation
+## Concatenation
 
 Join multiple source maps together.
 
@@ -29,7 +29,7 @@ foobar_map = foo_map + bar_map
 foobar_map.to_json
 ```
 
-# Piping
+## Piping
 
 Base one source map of another.
 
@@ -162,14 +162,14 @@ Convert a `Map` instance back to JSON.
 
 Instantiate an `Offset`, passing in a line and column integer.
 
-### +
+### Offset#+
 
 Add two offsets together.
 
-### <=>
+### Offset#<=>
 
 Compare the position of two offsets, first the line than the column.
 
-## to_s
+## Offset#to_s
 
 Get a pretty representation of an offset.
