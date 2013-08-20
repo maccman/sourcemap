@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'source_map/map'
 
-class TestMap < MiniTest::Unit::TestCase
+class TestMap < MiniTest::Test
   include SourceMap
 
   def setup
