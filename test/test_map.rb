@@ -26,7 +26,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[0]
     assert_equal 1, mapping.generated.line
     assert_equal 0, mapping.generated.column
-    assert_equal 2, mapping.original.line
+    assert_equal 3, mapping.original.line
     assert_equal 0, mapping.original.column
     assert_equal 'script.js', mapping.source
     assert_equal 'hello', mapping.name
@@ -34,7 +34,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[-1]
     assert_equal 1, mapping.generated.line
     assert_equal 45, mapping.generated.column
-    assert_equal 2, mapping.original.line
+    assert_equal 3, mapping.original.line
     assert_equal 17, mapping.original.column
     assert_equal 'script.js', mapping.source
     assert_equal nil, mapping.name
@@ -61,7 +61,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[0]
     assert_equal 6, mapping.generated.line
     assert_equal 2, mapping.generated.column
-    assert_equal 1, mapping.original.line
+    assert_equal 2, mapping.original.line
     assert_equal 0, mapping.original.column
     assert_equal 'example.coffee', mapping.source
     assert_equal 'number', mapping.name
@@ -69,7 +69,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[-1]
     assert_equal 43, mapping.generated.line
     assert_equal 6, mapping.generated.column
-    assert_equal 27, mapping.original.line
+    assert_equal 28, mapping.original.line
     assert_equal 8, mapping.original.column
     assert_equal 'example.coffee', mapping.source
     assert_equal nil, mapping.name
@@ -94,7 +94,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[0]
     assert_equal 1, mapping.generated.line
     assert_equal 0, mapping.generated.column
-    assert_equal 1, mapping.original.line
+    assert_equal 2, mapping.original.line
     assert_equal 1, mapping.original.column
     assert_equal 'example.js', mapping.source
     assert_equal nil, mapping.name
@@ -102,7 +102,7 @@ class TestMap < MiniTest::Unit::TestCase
     assert mapping = map[-1]
     assert_equal 1, mapping.generated.line
     assert_equal 289, mapping.generated.column
-    assert_equal 1, mapping.original.line
+    assert_equal 2, mapping.original.line
     assert_equal 1, mapping.original.column
     assert_equal 'example.js', mapping.source
     assert_equal nil, mapping.name
@@ -118,7 +118,7 @@ class TestMap < MiniTest::Unit::TestCase
   end
 
   def test_to_s
-    assert_equal "ACoBA;ACUA", @mappings.to_s
+    assert_equal "ACmBA;ACUA", @mappings.to_s
   end
 
   def test_sources
