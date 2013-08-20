@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'source_map/offset'
 
-class TestOffset < MiniTest::Unit::TestCase
+class TestOffset < MiniTest::Test
   include SourceMap
 
   def setup
