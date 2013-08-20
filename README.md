@@ -34,7 +34,7 @@ Base one source map of another.
 ``` ruby
 cs_map = SourceMap::Map.from_json File.read("examples/index.map")
 min_map = SourceMap::Map.from_json File.read("examples/index.min.map")
-combined_map = cs_map + min_map
+combined_map = cs_map | min_map
 combined_map.to_json
 ```
 
