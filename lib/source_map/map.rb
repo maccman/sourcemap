@@ -177,6 +177,9 @@ module SourceMap
 
         by_lines = @mappings.group_by { |m| m.generated.line }
 
+        sources_index = build_index(sources)
+        names_index   = build_index(names)
+
         ary = (1..by_lines.keys.max).map do |line|
           generated_column = 0
 
@@ -199,14 +202,6 @@ module SourceMap
         end
 
         VLQ.encode_mappings(ary)
-      end
-
-      def sources_index
-        @sources_index ||= build_index(sources)
-      end
-
-      def names_index
-        @names_index ||= build_index(names)
       end
 
     private
