@@ -102,6 +102,15 @@ module SourceMap
       @names ||= @mappings.map(&:name).uniq.compact
     end
 
+    def ==(other)
+      eql?(other)
+    end
+
+    def eql?(other)
+      other.is_a?(self.class) &&
+        self.mappings == other.mappings
+    end
+
     def +(other)
       mappings = @mappings.dup
       offset   = line_count + 1
@@ -162,6 +171,8 @@ module SourceMap
     end
 
     protected
+      attr_reader :mappings
+
       def build_vlq_string
         source_id        = 0
         source_line      = 1
