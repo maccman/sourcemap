@@ -1,17 +1,10 @@
 require 'json'
 
 require 'source_map/offset'
+require 'source_map/mapping'
 require 'source_map/vlq'
 
 module SourceMap
-  Mapping = Struct.new(:source, :generated, :original, :name) do
-    def to_s
-      "#{generated.line}:#{generated.column}->#{original.line}:#{original.column}"
-    end
-
-    alias_method :inspect, :to_s
-  end
-
   class Map
     include Enumerable
 
@@ -109,6 +102,16 @@ module SourceMap
       @names ||= @mappings.map(&:name).uniq.compact
     end
 
+    def ==(other)
+      eql?(other)
+    end
+
+    def eql?(other)
+      other.is_a?(self.class) &&
+        self.mappings == other.mappings &&
+        self.filename == other.filename
+    end
+
     def +(other)
       mappings = @mappings.dup
       offset   = line_count + 1
@@ -169,6 +172,8 @@ module SourceMap
     end
 
     protected
+      attr_reader :mappings
+
       def build_vlq_string
         source_id        = 0
         source_line      = 1
