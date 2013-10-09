@@ -108,7 +108,8 @@ module SourceMap
 
     def eql?(other)
       other.is_a?(self.class) &&
-        self.mappings == other.mappings
+        self.mappings == other.mappings &&
+        self.filename == other.filename
     end
 
     def +(other)

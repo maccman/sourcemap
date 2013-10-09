@@ -146,6 +146,11 @@ class TestMap < MiniTest::Test
       Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
       Mapping.new('z.js', Offset.new(2, 0), Offset.new(30, 0))
     ])
+    map7 = Map.new([
+      Mapping.new('a.js', Offset.new(0, 0), Offset.new(0, 0)),
+      Mapping.new('b.js', Offset.new(1, 0), Offset.new(20, 0)),
+      Mapping.new('c.js', Offset.new(2, 0), Offset.new(30, 0))
+    ], 'bar.js')
 
     assert map1.eql?(map1)
     assert map1.eql?(map2)
@@ -155,6 +160,7 @@ class TestMap < MiniTest::Test
     refute map1.eql?(map4)
     refute map1.eql?(map5)
     refute map1.eql?(map6)
+    refute map1.eql?(map7)
   end
 
   def test_add
