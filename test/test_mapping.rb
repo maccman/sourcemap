@@ -37,7 +37,6 @@ class TestMapping < MiniTest::Test
   end
 
   def test_inspect
-    assert_equal "1:5->2:0#foo", @mapping.inspect
-    # assert_equal "#<SourceMap::Mapping source=\"a.js\" generated=0:0, original=0:0>", @mapping.inspect
+    assert_equal "#<SourceMap::Mapping source=\"a.js\" generated=1:5, original=2:0 name=\"foo\">", @mapping.inspect
   end
 end
