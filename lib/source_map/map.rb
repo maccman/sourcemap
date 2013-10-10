@@ -114,7 +114,7 @@ module SourceMap
 
     def +(other)
       mappings = @mappings.dup
-      offset   = line_count + 1
+      offset   = line_count.zero? ? 0 : line_count+1
       other.each do |m|
         mappings << Mapping.new(
           m.source, m.generated + offset,
