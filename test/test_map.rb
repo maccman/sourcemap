@@ -16,7 +16,7 @@ class TestMap < MiniTest::Test
     hash = {
       'version' => 3,
       'file' => "script.min.js",
-      'lineCount' => 1,
+      'lineCount' => 2,
       'mappings' => "AAEAA,QAASA,MAAK,EAAG,CACfC,OAAAC,IAAA,CAAY,eAAZ,CADe",
       'sources' => ["script.js"],
       'names' => ["hello", "console", "log"]
@@ -51,7 +51,7 @@ class TestMap < MiniTest::Test
     hash = {
       'version' => 3,
       'file' => "example.js",
-      'lineCount' => 43,
+      'lineCount' => 44,
       'mappings' => ";;;;;EACAA;;EACAC;;EAGA;IAAA;;;EAGAC;IAAS;;;EAGTC;;EAGAC;IACE;IACA;IACA;MAAQ;;;;EAGVC;;;IACE;;;EAGF;IAAA;;;EAGAC;;;IAAQ;;MAAA",
       'sources' => ["example.coffee"],
       'names' => ["number", "opposite", "square", "list", "math", "race", "cubes"]
@@ -84,7 +84,7 @@ class TestMap < MiniTest::Test
     hash = {
       'version' => 3,
       'file' => "example.min.js",
-      'lineCount' => 1,
+      'lineCount' => 2,
       'mappings' => "AACC,SAAQ,EAAG,CAAA,IACCA,CADD,CACOC,CADP,CACaC,CADb,CAC0CC,CAWpDA,EAAA,CAASA,QAAQ,CAACC,CAAD,CAAI,CACnB,MAAOA,EAAP,CAAWA,CADQ,CAIrBJ,EAAA,CAAO,CAAC,CAAD,CAAI,CAAJ,CAAO,CAAP,CAAU,CAAV,CAAa,CAAb,CAEPC,EAAA,CAAO,MACCI,IAAAC,KADD,QAEGH,CAFH,MAGCI,QAAQ,CAACH,CAAD,CAAI,CAChB,MAAOA,EAAP,CAAWD,CAAA,CAAOC,CAAP,CADK,CAHb,CAcc,YAArB,GAAI,MAAOI,MAAX,EAA8C,IAA9C,GAAoCA,KAApC,EACEC,KAAA,CAAM,YAAN,CAGO,UAAQ,EAAG,CAAA,IACdC,CADc,CACVC,CADU,CACJC,CACdA,EAAA,CAAW,EACNF,EAAA,CAAK,CAAV,KAAaC,CAAb,CAAoBX,CAAAa,OAApB,CAAiCH,CAAjC,CAAsCC,CAAtC,CAA4CD,CAAA,EAA5C,CACER,CACA,CADMF,CAAA,CAAKU,CAAL,CACN,CAAAE,CAAAE,KAAA,CAAcb,CAAAM,KAAA,CAAUL,CAAV,CAAd,CAEF,OAAOU,EAPW,CAAX,CAAA,EApCC,CAAX,CAAAG,KAAA,CA8CO,IA9CP",
       'sources' => ["example.js"],
       'names' => ["list","math","num","square","x","Math","sqrt","cube","elvis","alert","_i","_len","_results","length","push","call"]
@@ -114,7 +114,8 @@ class TestMap < MiniTest::Test
   end
 
   def test_line_count
-    # assert_equal 3, @mappings.line_count
+    assert_equal 0, Map.new.line_count
+    assert_equal 3, @mappings.line_count
   end
 
   def test_to_s
