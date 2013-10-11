@@ -164,6 +164,13 @@ class TestMap < MiniTest::Test
     assert_equal 3, mappings3[3].generated.line
   end
 
+  def test_add_identity
+    identity_map = Map.new
+
+    assert_equal @mappings, identity_map + @mappings
+    assert_equal @mappings, @mappings + identity_map
+  end
+
   def test_pipe
     mappings1 = Map.from_json(%{
       {
@@ -190,6 +197,12 @@ class TestMap < MiniTest::Test
 
     mappings3 = mappings1 | mappings2
     assert_equal 'CAAA,WAAA,GAAA,KAAA,MAAO,WAAA,MACL,OAAM,eAER,IAAW,KAAX,CAAG,SAHH,KAAA', mappings3.to_s
+  end
+
+  def test_pipe_identity
+    identity_map = Map.new
+
+    assert_equal @mappings, identity_map | @mappings
   end
 
   def test_bsearch

@@ -121,6 +121,8 @@ module SourceMap
     end
 
     def |(other)
+      return other.dup if self.mappings.empty?
+
       mappings = []
 
       other.each do |m|
