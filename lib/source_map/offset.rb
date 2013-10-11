@@ -71,7 +71,11 @@ module SourceMap
     #
     # Returns a String.
     def to_s
-      "#{line}:#{column}"
+      if column == 0
+        "#{line}"
+      else
+        "#{line}:#{column}"
+      end
     end
 
     # Public: Get a pretty inspect output for debugging purposes.
