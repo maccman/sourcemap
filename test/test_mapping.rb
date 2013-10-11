@@ -33,7 +33,7 @@ class TestMapping < MiniTest::Test
   end
 
   def test_to_s
-    assert_equal "1:5->2:0#foo", @mapping.to_s
+    assert_equal "1:5->a.js@2:0#foo", @mapping.to_s
   end
 
   def test_inspect

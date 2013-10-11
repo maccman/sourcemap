@@ -201,6 +201,6 @@ class TestMap < MiniTest::Test
   end
 
   def test_inspect
-    assert_equal "#<SourceMap::Map mappings=[\"0:0->0:0\", \"1:0->20:0\", \"2:0->30:0\"]>", @mappings.inspect
+    assert_equal "#<SourceMap::Map mappings=[\"0:0->a.js@0:0\", \"1:0->b.js@20:0\", \"2:0->c.js@30:0\"]>", @mappings.inspect
   end
 end
