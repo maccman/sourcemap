@@ -203,7 +203,6 @@ class TestMap < MiniTest::Test
     identity_map = Map.new
 
     assert_equal @mappings, identity_map | @mappings
-    # assert_equal @mappings, @mappings | identity_map
   end
 
   def test_bsearch
