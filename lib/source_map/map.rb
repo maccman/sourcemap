@@ -124,13 +124,14 @@ module SourceMap
       mappings = []
 
       other.each do |m|
-        om = bsearch(m.original)
-        next unless om
-
-        mappings << Mapping.new(
-          om.source, m.generated,
-          om.original, om.name
-        )
+        if om = bsearch(m.original)
+          mappings << Mapping.new(
+            om.source, m.generated,
+            om.original, om.name
+          )
+        else
+          mappings << m
+        end
       end
 
       self.class.new(mappings, other.filename)
