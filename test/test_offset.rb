@@ -31,7 +31,9 @@ class TestOffset < MiniTest::Test
   end
 
   def test_to_s
-    assert_equal "1:5", @offset.to_s
+    assert_equal "0", Offset.new(0, 0).to_s
+    assert_equal "1", Offset.new(1, 0).to_s
+    assert_equal "1:5", Offset.new(1, 5).to_s
   end
 
   def test_inspect

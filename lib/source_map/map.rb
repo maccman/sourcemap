@@ -117,7 +117,7 @@ module SourceMap
           m.original, m.name
         )
       end
-      self.class.new(mappings)
+      self.class.new(mappings, other.filename)
     end
 
     def |(other)
@@ -164,6 +164,17 @@ module SourceMap
         "sources"   => sources,
         "names"     => names
       }
+    end
+
+    # Public: Get a pretty inspect output for debugging purposes.
+    #
+    # Returns a String.
+    def inspect
+      str = "#<#{self.class}"
+      str << " filename=#{filename.inspect}" if filename
+      str << " mappings=#{mappings.map(&:to_s).inspect}" if mappings.any?
+      str << ">"
+      str
     end
 
     protected

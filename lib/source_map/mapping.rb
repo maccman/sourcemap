@@ -7,7 +7,7 @@ module SourceMap
     # Returns a String.
     def to_s
       str = "#{generated.line}:#{generated.column}"
-      str << "->#{original.line}:#{original.column}"
+      str << "->#{source}@#{original.line}:#{original.column}"
       str << "##{name}" if name
       str
     end
