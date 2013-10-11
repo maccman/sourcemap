@@ -199,6 +199,13 @@ class TestMap < MiniTest::Test
     assert_equal 'CAAA,WAAA,GAAA,KAAA,MAAO,WAAA,MACL,OAAM,eAER,IAAW,KAAX,CAAG,SAHH,KAAA', mappings3.to_s
   end
 
+  def test_pipe_identity
+    identity_map = Map.new
+
+    assert_equal @mappings, identity_map | @mappings
+    assert_equal @mappings, @mappings | identity_map
+  end
+
   def test_bsearch
     assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 0)).original
     assert_equal Offset.new(0, 0), @mappings.bsearch(Offset.new(0, 5)).original
