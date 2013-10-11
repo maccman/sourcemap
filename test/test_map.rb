@@ -199,4 +199,8 @@ class TestMap < MiniTest::Test
     assert_equal Offset.new(20, 0), @mappings.bsearch(Offset.new(1, 0)).original
     assert_equal Offset.new(30, 0), @mappings.bsearch(Offset.new(2, 0)).original
   end
+
+  def test_inspect
+    assert_equal "#<SourceMap::Map mappings=[\"0:0->0:0\", \"1:0->20:0\", \"2:0->30:0\"]>", @mappings.inspect
+  end
 end

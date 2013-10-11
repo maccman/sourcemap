@@ -166,6 +166,17 @@ module SourceMap
       }
     end
 
+    # Public: Get a pretty inspect output for debugging purposes.
+    #
+    # Returns a String.
+    def inspect
+      str = "#<#{self.class}"
+      str << " filename=#{filename.inspect}" if filename
+      str << " mappings=#{mappings.map(&:to_s).inspect}" if mappings.any?
+      str << ">"
+      str
+    end
+
     protected
       attr_reader :mappings
 
