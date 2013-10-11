@@ -74,10 +74,6 @@ module SourceMap
 
     attr_reader :filename
 
-    def line_count
-      @line_count ||= @mappings.any? ? @mappings.last.generated.line+1 : 0
-    end
-
     def size
       @mappings.size
     end
@@ -114,7 +110,7 @@ module SourceMap
 
     def +(other)
       mappings = @mappings.dup
-      offset   = line_count
+      offset   = @mappings.any? ? @mappings.last.generated.line+1 : 0
       other.each do |m|
         mappings << Mapping.new(
           m.source, m.generated + offset,
@@ -164,7 +160,6 @@ module SourceMap
       {
         "version"   => 3,
         "file"      => filename,
-        "lineCount" => line_count,
         "mappings"  => to_s,
         "sources"   => sources,
         "names"     => names

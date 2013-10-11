@@ -64,7 +64,6 @@ Create a new `Map` instance from a hash.
     hash = {
       'version'   => 3,
       'file'      => "script.min.js",
-      'lineCount' => 1,
       'mappings'  => "AAEAA,QAASA,MAAK,EAAG,CACfC,OAAAC,IAAA,CAAY,eAAZ,CADe",
       'sources'   => ["script.js"],
       'names'     => ["hello", "console", "log"]
@@ -80,10 +79,6 @@ Instantiate a `Map` instance, passing in an optional array of `Mapping`s and fil
       SourceMap::Mapping.new('b.js', SourceMap::Offset.new(1, 0), SourceMap::Offset.new(20, 0)),
       SourceMap::Mapping.new('c.js', SourceMap::Offset.new(2, 0), SourceMap::Offset.new(30, 0))
     ])
-
-### Map#line_count
-
-Returns the line number of the last mapping.
 
 ### Map#size
 
