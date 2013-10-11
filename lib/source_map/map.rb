@@ -121,17 +121,18 @@ module SourceMap
     end
 
     def |(other)
+      return other.dup if self.mappings.empty?
+
       mappings = []
 
       other.each do |m|
-        if om = bsearch(m.original)
-          mappings << Mapping.new(
-            om.source, m.generated,
-            om.original, om.name
-          )
-        else
-          mappings << m
-        end
+        om = bsearch(m.original)
+        next unless om
+
+        mappings << Mapping.new(
+          om.source, m.generated,
+          om.original, om.name
+        )
       end
 
       self.class.new(mappings, other.filename)
