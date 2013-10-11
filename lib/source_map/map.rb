@@ -117,7 +117,7 @@ module SourceMap
           m.original, m.name
         )
       end
-      self.class.new(mappings)
+      self.class.new(mappings, other.filename)
     end
 
     def |(other)
