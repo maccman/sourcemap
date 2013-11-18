@@ -158,7 +158,7 @@ module SourceMap
       end
     end
 
-    def as_json
+    def as_json(*)
       {
         "version"   => 3,
         "file"      => filename,
@@ -166,6 +166,10 @@ module SourceMap
         "sources"   => sources,
         "names"     => names
       }
+    end
+
+    def to_json(*a)
+      as_json.to_json(*a)
     end
 
     # Public: Get a pretty inspect output for debugging purposes.

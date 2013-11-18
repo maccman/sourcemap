@@ -43,6 +43,8 @@ class TestMap < MiniTest::Test
     assert_equal hash['mappings'], map.to_s
 
     assert_equal hash, map.as_json
+    assert_equal hash.to_json, map.to_json
+    assert_equal hash.to_json, JSON.generate(map)
   end
 
   def test_map2
