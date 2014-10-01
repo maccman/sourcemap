@@ -25,7 +25,7 @@ module SourceMap
     #
     # Returns a VLQ String.
     def self.encode(ary)
-      result = ""
+      result = []
       ary.each do |n|
         vlq = n < 0 ? ((-n) << 1) + 1 : n << 1
         loop do
@@ -37,7 +37,7 @@ module SourceMap
           break unless vlq > 0
         end
       end
-      result
+      result.join
     end
 
     # Public: Decode a VLQ string.
