@@ -113,7 +113,7 @@ class TestMap < MiniTest::Test
     assert_equal "ACmBA;ACUA", @mappings.to_s
 
     empty_map = Map.new([])
-    assert empty_map.to_s
+    assert_equal "", empty_map.to_s
   end
 
   def test_sources
